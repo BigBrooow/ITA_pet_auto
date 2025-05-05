@@ -7,13 +7,22 @@ import requests
 
 class AllureHelper:
 
-    def attach_http_response(self, response: requests.Response):
-        with allure.step(f'Attaching {response}'):
-            request: requests.PreparedRequest = response.request
+    def _attach_http_request(self, response: requests.Response):
+        with allure.step(f'Attaching {response.request}'):
+            request = response.request
             allure.attach(body=f'Request {request.method} {request.url}\n'
-                               f'body: {str(request.body)}\n'
-                               f'headers: {json.dumps(request.headers)}\n'
+                               f'body: {json.loads(request.body.decode())}\n'
+                               f'headers: {json.dumps(dict(request.headers))}\n'
+                               f'time: {datetime.datetime.now()}',
+                          )
+
+    def _attach_http_response(self, response: requests.Response):
+        with allure.step(f'Attaching {response}'):
+            allure.attach(body=f'body: {response.json()}\n'
+                               f'headers: {json.dumps(dict(response.headers))}\n'
                                f'time: {datetime.datetime.now()}')
 
     def enrich_allure(self, response: requests.Response):
-        self.attach_http_response(response)
+        self._attach_http_request(response)
+        self._attach_http_response(response)
+

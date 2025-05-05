@@ -35,7 +35,7 @@ class PetsApi:
     # def post_pet_image(self, pet_id: int) -> json:
     #     login_data = PetsApi().login(LoginPageConfig.EMAIL, LoginPageConfig.PASSWORD)
     #     headers = {'Authorization': f'Bearer {login_data[0]["token"]}'}
-    #     files = {'pic': ('pet.png', open('tests\\tests_api\\pet.png', 'rb'), 'image/png')}
+    #     files = {'pic': ('pet.png', open('tests_ui\\tests_api\\pet.png', 'rb'), 'image/png')}
     #     res = requests.post(self.base_url + f'pet/{pet_id}/image', headers=headers, files=files)
     #     return res.json(), res.status_code
 

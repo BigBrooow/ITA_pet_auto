@@ -5,3 +5,6 @@ class BasePage:
 
     def open_page(self, link):
         self.page.goto(link)
+
+    def get_url(self):
+        return self.page.url()

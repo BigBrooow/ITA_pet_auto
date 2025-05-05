@@ -40,4 +40,20 @@ class Client(ClientApi):
             url='login',
             json=request.model_dump()
         )
+        AllureHelper().enrich_allure(response=response)
+        return validate_response(response=response, model=expected_model, status_code=status_code)
+
+    @allure.step('GET /pet/{id}')
+    def get_pet(self,
+                pet_id: int,
+                request,
+                expected_model,
+                status_code: int = 200
+                ):
+        response = self.request(
+            method='get',
+            url=f'pet/{pet_id}',
+            json=request.model_dump()
+        )
+        AllureHelper().enrich_allure(response=response)
         return validate_response(response=response, model=expected_model, status_code=status_code)
